@@ -17,6 +17,12 @@ public class SkillController {
     @Autowired
     private SkillRepository skillRepository;
 
+    @GetMapping
+    public String displaySkills(Model model){
+        model.addAttribute("skills", skillRepository.findAll());
+        return "skills/index";
+    }
+
     @GetMapping("add")
     public String displayAddSkillForm(Model model){
         model.addAttribute(new Skill());
@@ -39,7 +45,8 @@ public class SkillController {
         if(optSkill.isPresent()){
             Skill skill = (Skill) optSkill.get();
             model.addAttribute("skill", skill);
-            return "employer/view";
+
+            return "skills/view";
         }else{
             return "redirect:.../";
         }
